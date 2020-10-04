@@ -11,6 +11,7 @@ cmake ..
 cmake --build . --config Release
 
 **Current features**
+* React
 
 **Planned features**
 * Expose windows controls for music 
@@ -24,4 +25,3 @@ cmake --build . --config Release
 **Areas that need improvement**
 * Ability to include css into the widget
 * Pass low level input into ultralight
-* Babel / Wepback compiler (Should reduce ram usage)
