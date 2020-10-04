@@ -1,14 +1,18 @@
 # DekstopWidgets
  
-Build instuctions
+**Build instuctions**
+
 mkdir build
+
 cd build
+
 cmake ..
+
 cmake --build . --config Release
 
-Current features
+**Current features**
 
-Planned features
+**Planned features**
 * Expose windows controls for music 
 * Expose sound that is playing (Used for visualizer)
 * Expose ability to start program
@@ -17,7 +21,7 @@ Planned features
 * Background controls
 * C++ plugins
 
-Areas that need improvement
+**Areas that need improvement**
 * Ability to include css into the widget
 * Pass low level input into ultralight
 * Babel / Wepback compiler (Should reduce ram usage)
