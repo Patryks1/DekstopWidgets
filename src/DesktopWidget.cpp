@@ -22,13 +22,13 @@ BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
     return true;
 }
 
-HWND get_wallpaper_window()
+HWND GetDesktopWindowHandle()
 {
-    HWND wallpaper_hwnd = nullptr;
+    HWND wallpaperHwnd = nullptr;
     HWND progman = FindWindow("ProgMan", NULL);
     SendMessageTimeout(progman, 0x052C, 0, 0, SMTO_NORMAL, 1000, nullptr);
-    EnumWindows(EnumWindowsProc, (LPARAM)&wallpaper_hwnd);
-    return wallpaper_hwnd;
+    EnumWindows(EnumWindowsProc, (LPARAM)&wallpaperHwnd);
+    return wallpaperHwnd;
 }
 
 DesktopWidget::DesktopWidget() {
@@ -40,14 +40,14 @@ DesktopWidget::DesktopWidget() {
   window = Window::Create(app->main_monitor(), WINDOW_WIDTH, WINDOW_HEIGHT,
     false, kWindowFlags_Titled | kWindowFlags_Borderless);
 
-  dekstopHandle = get_wallpaper_window();
+  dekstopHandle = GetDesktopWindowHandle();
 
   app->set_window(*window.get());
   overlay = Overlay::Create(*window.get(), 1, 1, 0, 0);
 
   OnResize(window->width(), window->height());
 
-  overlay->view()->LoadURL("file:///main.html");
+  overlay->view()->LoadURL("file:///index.html");
   overlay2_ = overlay;
 
   app->set_listener(this);
@@ -65,6 +65,7 @@ void DesktopWidget::Run() {
 }
 
 void DesktopWidget::OnUpdate() {
+#ifdef DEBUG
     if (GetAsyncKeyState(VK_F5) & 1)
     {
         overlay->view()->Reload();
@@ -75,6 +76,7 @@ void DesktopWidget::OnUpdate() {
         bSwitch = !bSwitch;
         SetParent((HWND)window->native_handle(), bSwitch ? dekstopHandle : NULL);
     }
+#endif // DEBUG
 }
 
 void DesktopWidget::OnClose() {

@@ -1,0 +1,43 @@
+
+
+.active {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    float: right;
+    background-color:#27ae60;
+}
+
+.inactive {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    float: right;
+    background-color:#c0392b;
+}
+
+.columnLeft {
+    float: left;
+    text-align: left;
+    width: 65%;
+    padding: 10px;
+}
+
+.columnRight {
+    float: left;
+    text-align: right;
+    width: 35%;
+    padding: 10px;
+}
+
+.uniqueClients {
+    display:inline-block;
+    margin-right: 8px;
+}
+
+.headerRight {
+    float:right;
+    margin-right: 10px;
+}
