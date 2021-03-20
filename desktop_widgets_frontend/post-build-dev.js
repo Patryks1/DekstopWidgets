@@ -6,6 +6,7 @@ ncp.limit = 16;
 
 var srcPath = './build';
 var destPath = '../build/debug/assets';
+var assetsdestPath = '../assets';
 
 var deleteFolderRecursive = function(path) {
   if( fs.existsSync(path) ) {
@@ -33,6 +34,14 @@ console.log('Directory created');
 
 console.log('Copying files...');
 ncp(srcPath, destPath, function (err) {
+  if (err) {
+    return console.error(err);
+  }
+  console.log('Copying files complete.');
+});
+
+console.log('Copying files to assets...');
+ncp(srcPath, assetsdestPath, function (err) {
   if (err) {
     return console.error(err);
   }

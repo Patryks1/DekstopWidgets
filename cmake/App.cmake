@@ -1,4 +1,4 @@
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
@@ -32,6 +32,7 @@ MACRO(ADD_APP source_list)
   link_libraries(UltralightCore AppCore Ultralight WebCore)
 
   add_executable(${APP_NAME} WIN32 ${source_list})
+  target_precompile_headers(${APP_NAME}  PRIVATE ${PROJECT_SOURCE_DIR}/src/pch.h)
   
   if (MSVC)
     # Tell MSVC to use main instead of WinMain for Windows subsystem executables

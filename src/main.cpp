@@ -1,7 +1,10 @@
-#include "DesktopWidget.h"
+#include "App.h"
 
 int main() {
-	DesktopWidget app;
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+
+	MyApp app;
 	app.Run();
 
 	return 0;

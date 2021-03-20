@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Widget Editor</title>
+    <style type="text/css">
+      body {
+        padding: 0;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .navbar {
+        overflow: hidden;
+        background-color: #333;
+        z-index: 9999;
+      }
+
+      .navbar a {
+        float: left;
+        font-size: 16px;
+        color: white;
+        text-align: center;
+        padding: 9px 9px;
+        text-decoration: none;
+      }
+
+      .dropdown {
+        float: left;
+        overflow: hidden;
+      }
+
+      .run {
+        float: right;
+        font-size: 16px;
+        color: white;
+        background: none;
+        padding: 9px 9px;
+        cursor: pointer;
+        background-color: green;
+      }
+
+      .run:hover {
+        background-color: rgb(1, 66, 1);
+      }
+
+      .dropdown .dropbtn {
+        font-size: 16px;
+        border: none;
+        outline: none;
+        color: white;
+        padding: 9px 9px;
+        background-color: inherit;
+        font-family: inherit;
+        margin: 0;
+      }
+
+      .navbar a:hover,
+      .dropdown:hover .dropbtn {
+        background-color: red;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: fixed;
+        background-color: #f9f9f9;
+        min-width: 130px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 9999;
+      }
+
+      .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 10px 10px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .dropdown-content a:hover {
+        background-color: #ddd;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      #editor {    
+        height: Calc(100vh - 41px);
+        width: 100%;
+        font-size: 13px;
+      }
+
+      .ace-dracula .ace_marker-layer .ace_active-line {
+        background: #44475a;
+      }
+
+      .ace-dracula .ace_marker-layer .ace_selection {
+        background: #64599a;
+      }
+
+      .ace-dracula .ace_gutter-active-line {
+        background-color: #44475a;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="dropdown">
+        <button class="dropbtn">
+          File
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a onclick="OpenFile()">Open File</a>
+          <a onclick="SaveFile()">Save</a>
+          <a onclick="SaveFileAs()">SaveAs</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">
+          View
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a onclick="ToggleShowPreviewWindow()" id="preview-window">Preview Window</a>
+        </div>
+      </div>
+      <button class="run" onclick="Run()">
+        Run
+      </button>
+    </div>
+
+    <div id="editor"></div>
+
+    <script
+      src="ace-1.4.12-src-min-noconflict/ace.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    <script
+      src="ace-1.4.12-src-min-noconflict/ext-language_tools.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    <script>
+      var editor = ace.edit("editor");
+
+      editor.setTheme("ace/theme/dracula");
+      editor.session.setMode("ace/mode/html");
+      editor.setOptions({
+        showPrintMargin: false,
+        showInvisibles: true,
+        enableLiveAutocompletion: true,
+        enableSnippets: true,
+        autoScrollEditorIntoView: true,
+        wrap: true,
+      });
+      editor.setScrollSpeed(.1)
+      editor.clearSelection();
+      editor.getSession().on("change", function () {
+        var content = editor.getSession().getValue();
+        UpdateEditor(content);
+      });    
+
+      function Run() {
+        var content = editor.getSession().getValue();
+        UpdateEditor(content);
+      }
+    </script>
+  </body>
+</html>
