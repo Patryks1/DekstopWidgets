@@ -22,20 +22,19 @@ HWND DesktopBackground::GetDesktopWindowHandle()
 
 DesktopBackground::DesktopBackground(RefPtr<App> app)
 {
-    dekstopHandle = GetDesktopWindowHandle();
-    window = Window::Create(app->main_monitor(), app->main_monitor()->width(), app->main_monitor()->height(), false, kWindowFlags_Borderless);
+    window_ = Window::Create(app->main_monitor(), app->main_monitor()->width(), app->main_monitor()->height(), false, kWindowFlags_Borderless);
 
-    if (window.get() != NULL)
+    if (window_.get() != NULL)
     {
-        overlay = Overlay::Create(*window.get(), 1, 1, 0, 0);
+        overlay_ = Overlay::Create(*window_.get(), 1, 1, 0, 0);
 
-        overlay->view()->LoadURL("file:///index.html");
+        overlay_->view()->LoadURL("file:///index.html");
 
-        window->set_listener(this);
-        OnResize(window.get(), window->width(), window->height());
+        window_->set_listener(this);
+        OnResize(window_.get(), window_->width(), window_->height());
 
-        overlay->view()->set_load_listener(this);
-        overlay->view()->set_view_listener(this);
+        overlay_->view()->set_load_listener(this);
+        overlay_->view()->set_view_listener(this);
     }
 }
 
@@ -51,7 +50,7 @@ JSValue DesktopBackground::OnButtonClick(const JSObject& thisObject, const JSArg
 }
 
 void DesktopBackground::OnResize(ultralight::Window* window, uint32_t width, uint32_t height) {
-  overlay->Resize(width, height);
+  overlay_->Resize(width, height);
 }
 
 void DesktopBackground::OnFinishLoading(ultralight::View* caller,
@@ -75,13 +74,13 @@ void DesktopBackground::OnDOMReady(ultralight::View* caller,
 void DesktopBackground::OnChangeCursor(ultralight::View* caller,
     Cursor cursor) {
 
-    window->SetCursor(cursor);
+    window_->SetCursor(cursor);
 }
 
 void DesktopBackground::OnChangeTitle(ultralight::View* caller,
     const String& title) {
 
-    window->SetTitle(title.utf8().data());
+    window_->SetTitle(title.utf8().data());
 }
 
 inline std::string ToUTF8(const String& str) {

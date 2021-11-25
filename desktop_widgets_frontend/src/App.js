@@ -4,7 +4,9 @@ import './App.css';
 
 function App() {
   return (
-    <div>
+    <div >
+      			<img src="http://i.stack.imgur.com/SBv4T.gif" alt="this slowpoke moves"  width="250" />
+
       <PiHole />
     </div>
   );

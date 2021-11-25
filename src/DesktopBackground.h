@@ -45,23 +45,26 @@ public:
 
     HWND GetDesktopWindowHandle();
 
+     Ref<Window> window() { return *window_; }
+     Ref<Overlay> overlay() { return *overlay_; }
+
     bool IsInForeGround() {
         return bSwitch;
-    }
-
-    HWND GetDesktopHandle() {
-        return dekstopHandle;
     }
 
     void SetInForeGround(bool newValue) {
         bSwitch = newValue;
     }
 
-protected:
-    RefPtr<Window> window;
-    RefPtr<Overlay> overlay;
+    bool IsFocused() {
+        HWND foreGroundWindow = GetForegroundWindow();
+        return window()->native_handle() == foreGroundWindow;
+    }
+
+private:
+    RefPtr<Window> window_;
+    RefPtr<Overlay> overlay_;
 
     // Background process
-    HWND dekstopHandle = NULL;
     bool bSwitch = false;
 };

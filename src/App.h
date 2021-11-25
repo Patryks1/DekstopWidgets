@@ -22,7 +22,7 @@ public:
         app = App::Create();
 
         app->set_listener(this);
-        //backgroundWindow.reset(new DesktopBackground(app));
+        backgroundWindow.reset(new DesktopBackground(app));
         //optionsWindow.reset(new HTMLWindow("asdasd", "file:///test.html", 700, 50, 600, 700));
 
         editorWindow.reset(new EditorWindow("Widget Editor", "file:///widgetCreator/editor.html", 50, 50, 600, 700));
@@ -34,6 +34,9 @@ public:
     virtual void OnUpdate() override {
         if (GetAsyncKeyState(VK_F5) & 1)
         {
+            if (backgroundWindow->IsFocused())
+                backgroundWindow->overlay()->view()->Reload();
+
             if (editorWindow->IsFocused())
                 editorWindow->view()->Reload();
 
@@ -41,11 +44,13 @@ public:
                 previewWindow->view()->Reload();
         }
 
-        /*if (GetAsyncKeyState(VK_F1) & 1)
+        if (GetAsyncKeyState(VK_F2) & 1)
         {
-            bSwitch = !bSwitch;
-            SetParent((HWND)window->native_handle(), bSwitch ? dekstopHandle : NULL);
-        }*/
+            auto isInForeGround = backgroundWindow->IsInForeGround();
+            backgroundWindow->SetInForeGround(!isInForeGround);
+
+            SetParent((HWND)backgroundWindow->window()->native_handle(), isInForeGround ? backgroundWindow->GetDesktopWindowHandle() : NULL);
+        }
 
         if (GetAsyncKeyState(VK_F1) & 1)
         {
